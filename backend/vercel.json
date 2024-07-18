@@ -1,16 +1,19 @@
-{ "version": 2, 
-"builds":[
-    {
-        "/backend":"/backend/index.js",
-        "use":"@vercel"
-    }
-],
-
-"routes":[
-    {
- "/backend":"(*)",
-  "dest":"/backend/index.js"
-    }
-]
-
- }
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "index.js"
+      }
+    ],
+    "env": {
+    "MONGODB_URI": "mongodb+srv://junior_melo:mooncake21@cluster0.betei9v.mongodb.net/"
+  }
+  }
+  
