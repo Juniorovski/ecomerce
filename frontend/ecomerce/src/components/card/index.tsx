@@ -22,7 +22,7 @@ export default function Card() {
     return (
       <View
         key={item._id}
-        className="flex h-72 mb-2 mt-1 justify-between items-center gap-2 flex-col border border-slate-300 rounded-2xl"
+        className="flex h-72 mb-2 mt-2  justify-between items-center gap-2 flex-col border border-slate-300 rounded-2xl"
        >
         <Pressable className="w-full h-40 rounded-t-xl border ">
           <Image
