@@ -22,11 +22,11 @@ export default function Card() {
     return (
       <View
         key={item._id}
-        className="flex h-72 mb-2 mt-2  justify-between items-center gap-2 flex-col border border-slate-300 rounded-2xl"
+        className=" w-56 flex h-72 mt-2 mb-2  items-center gap-2 flex-col border border-slate-300 rounded-2xl"
        >
-        <Pressable className="w-full h-40 rounded-t-xl border ">
+        <Pressable className="w-full h-48 rounded-t-xl border ">
           <Image
-            className="w-full h-40 rounded-t-xl"
+            className="w-full h-48 rounded-t-xl"
             source={{ uri:`${process.env.IMAGE_PATH}/images/${item}`}} 
           />
         </Pressable>

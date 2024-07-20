@@ -27,18 +27,20 @@ export default function Index() {
         action={() => console.log("clicou no veja todos")}
         size="text-3xl"
       />
-      <View className=" w-full   flex-row gap-2 justify-center items-center  ">
+      <View className=" w-full px-4 flex-row gap-2 flex justify-center mb-4">
         <Card />
       </View>
+
       <Sections
         name="Produtos mais vendidos"
         label="veja todos"
         action={() => console.log("clicou no veja todos")}
         size="text-3xl"
       />
-      <View className=" w-full   flex-row gap-2 justify-center items-center ">
+      <View className=" w-full px-4 flex-row gap-2 flex  justify-center mb-4">
         <Card />
       </View>
+
     </ScrollView>
   );
 }

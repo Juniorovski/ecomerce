@@ -14,7 +14,7 @@ interface Props {
 }
 export default function ({ icon, name, size, action, seta }: Props) {
   return (
-    <View className=" w-full  px-2 mx-2 mt-2 rounded-xl border border-slate-300 mb-2  ">
+    <View className=" w-full  px-2 mb-4 mt-2 rounded-xl border border-slate-300 mb-2  ">
       <Pressable
         onPress={action}
         className="flex flex-row justify-between px-4 mx-2 "
