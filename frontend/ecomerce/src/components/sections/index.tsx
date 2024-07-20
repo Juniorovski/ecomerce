@@ -3,7 +3,7 @@ import React from "react";
 
 interface Props {
   name: string;
-  size: "text-lg" | "text-xl" | "text-2xl";
+  size: "text-lg" | "text-xl" | "text-2xl" | "text-3xl";
   label: string;
   action: () => void;
 }

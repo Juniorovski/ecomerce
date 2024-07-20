@@ -1,0 +1,40 @@
+import { View, Text ,Pressable} from 'react-native'
+import React from 'react'
+import { Feather } from '@expo/vector-icons';
+
+interface Props{
+ icon?:{
+    name:string,
+    size:number,
+    
+ };
+  name:string;
+  size: "text-lg" | "text-xl" | "text-2xl" | "text-3xl";
+  action:()=> void;
+  seta : string
+
+}
+export default function({icon,name, size, action , seta}: Props) { 
+  return (
+    <View className=' w-11/12  px-2  mt-4 rounded-xl border mb-2  '>
+    <Pressable onPress={action} 
+    className='flex flex-row justify-between px-4 mx-4 '  >
+   
+        <  View className='flex flex-row gap-2 items-center rounded-sm'>
+        {icon && (
+          <Feather
+            name={icon.name}
+            size={icon.size}
+            />
+    )}
+        <Text className={`${size} font-bold my-4 items-center`}>{name}</Text>
+        </View>
+   
+        <View >
+          <Text className={`${size} font-bold my-4 items-center justify-end`}>{seta}</Text>
+        </View>
+       
+    </Pressable>
+    </View>
+  )
+}

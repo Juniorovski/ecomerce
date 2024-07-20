@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL:""
+    baseURL:"https://backend-seven-sooty.vercel.app/"
 });
 
 export default api;
