@@ -2,23 +2,19 @@ import { View, Text, Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import api from "@/api/api";
 
-
-
 export default function Card() {
   const [produtoData, setProdutoData] = useState([]);
 
   useEffect(()  => {
     fetchData();
-           
-        
-     
+                  
   }, []);
 
   const fetchData = async () => {
     try {
       const response = await api.get(`/produto/listProdutos`);
-
       setProdutoData(response.data.produto);
+      //console.log(response.data.produto)
     } catch (error) {
       console.log(error);
     }
@@ -29,10 +25,10 @@ export default function Card() {
         key={item._id}
         className=" w-52 flex h-80 mt-2 mb-2  items-center gap-2 flex-col border border-slate-300 rounded-2xl"
        >
-        <Pressable className="w-full h-60 rounded-t-2xl border ">
+        <Pressable className="w-full h-60 rounded-t-2xl  ">
           <Image
             className="w-full h-60 rounded-t-2xl"
-            source={{ uri:`${item.image}`}} 
+            source={{uri:`http://localhost:5001/files/1721547066737.jpg`}} 
           />
         </Pressable>
        <View className="w-full flex flex-col items-center ">

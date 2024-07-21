@@ -6,7 +6,7 @@ const path = require('path');
 app.use(express.json());
 app.use(cors({credentials:true,origin:`*`}));
 
-app.use('/uploads', express.static(path.join(__dirname,'uploads')));
+app.use('/files',express.static(path.resolve(__dirname,"public","images")));
 
 const userRouter = require('./routers/userRouter');
 app.use('/users',userRouter);
