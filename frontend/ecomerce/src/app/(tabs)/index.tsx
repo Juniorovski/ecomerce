@@ -1,10 +1,10 @@
 import { Text, View, ScrollView } from "react-native";
-import { Header } from "../components/header";
+import { Header } from "../../components/header";
 import Constants from "expo-constants";
-import { Banner } from "../components/banner";
-import { Search } from "../components/search";
-import Sections from "../components/sections";
-import Card from "../components/card";
+import { Banner } from "../../components/banner";
+import { Search } from "../../components/search";
+import Sections from "../../components/sections";
+import Card from "../../components/card";
 
 const statusBarHeight = Constants.statusBarHeight;
 

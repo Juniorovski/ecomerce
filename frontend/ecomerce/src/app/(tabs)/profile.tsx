@@ -1,7 +1,9 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
-import Section from "../components/section";
+import Section from "../../components/section";
 import Constants from "expo-constants";
+import { Link } from "expo-router";
+
 
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -28,7 +30,7 @@ export default function Profile() {
           icon={{ name: "user", size: 24 }}
           name="Editar Perfil"
           size="text-2xl"
-          action={() => console.log("Edite perfil clicado")}
+          action={() =>''}
           seta=">"
         />
         <Section
