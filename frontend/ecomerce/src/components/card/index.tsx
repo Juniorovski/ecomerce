@@ -23,15 +23,15 @@ export default function Card() {
     return (
       <View
         key={item._id}
-        className=" w-52 flex h-80 mt-2 mb-2  items-center gap-2 flex-col border border-slate-300 rounded-2xl"
+        className="w-52 flex h-80 mt-2 mb-2  items-center gap-2 flex-col border border-slate-300 rounded-2xl"
        >
         <Pressable className="w-full h-60 rounded-t-2xl  ">
           <Image
             className="w-full h-60 rounded-t-2xl"
-            source={{uri:`http://localhost:5001/files/1721547066737.jpg`}} 
+            source={{uri:`http://10.0.0.248:5001/files/${item.image}`}} 
           />
         </Pressable>
-       <View className="w-full flex flex-col items-center ">
+       <View className="w-full flex flex-col items-center "> 
          <Text className="font-bold text-xl">{item.name.slice(0,12)}...</Text>
           <Text className="color-slate-700 text-xl">{item.categoria.name}</Text>
         </View>

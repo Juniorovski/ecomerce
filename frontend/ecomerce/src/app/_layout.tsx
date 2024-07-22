@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import {  Tabs } from "expo-router";
 import '../styles/global.css'
 import { Feather, Ionicons } from "@expo/vector-icons";
 
@@ -49,3 +49,4 @@ export default function RootLayout() {
   )
    
 }
+
