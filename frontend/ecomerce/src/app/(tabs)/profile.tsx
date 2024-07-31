@@ -12,8 +12,8 @@ export default function Profile() {
   return (
     <View
       className="flex-1  items-center"
-      style={{ marginTop: statusBarHeight + 8 }}>
-      <View className="w-full  flex flex-row items-center gap-2  mb-8 px-4  ">
+      style={{ marginTop: statusBarHeight -30 }}>
+      <View className="w-full h-64 flex flex-row items-center gap-2  mb-8 px-4 ">
         <Image
           className="w-32 h-32 rounded-full mt-4 px-4 mb-4 mx-2 "
           source={{ uri: `https://github.com/Juniorovski.png` }}
@@ -25,7 +25,8 @@ export default function Profile() {
           </Text>
         </View>
       </View>
-      <View className="w-full h-full flex flex-col gap-2 mt-16 mb-2 px-4  ">
+
+      <View className="w-full h-full flex flex-col gap-2 mt-16 mb-2 px-4 ">
         <Section
           icon={{ name: "user", size: 24 }}
           name="Editar Perfil"

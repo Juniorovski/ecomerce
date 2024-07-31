@@ -21,10 +21,10 @@ export default function RootLayout() {
     />
 
    <Tabs.Screen
-     name="catalog"
+     name="favorite"
      options={{
-      title:"Menu",
-      tabBarIcon:({color}) => <Ionicons  size={26} name="grid-outline" color={color}/>,
+      title:"Favoritos",
+      tabBarIcon:({color}) => <Ionicons  size={26} name="heart-outline" color={color}/>,
       headerShown:false
      }}
    />
