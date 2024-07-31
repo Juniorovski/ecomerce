@@ -25,7 +25,7 @@ export default function Profile() {
           </Text>
         </View>
       </View>
-      <View className="w-full h-full flex flex-col border border-slate-500 rounded-t-3xl gap-2 mt-8 mb-2 px-2  ">
+      <View className="w-full h-full flex flex-col gap-2 mt-16 mb-2 px-4  ">
         <Section
           icon={{ name: "user", size: 24 }}
           name="Editar Perfil"

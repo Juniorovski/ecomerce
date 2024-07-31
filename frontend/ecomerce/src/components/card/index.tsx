@@ -23,11 +23,11 @@ export default function Card() {
     return (
       <View
         key={item._id}
-        className="w-52 flex h-80 mt-2 mb-2  items-center gap-2 flex-col border border-slate-300 rounded-2xl"
+        className="w-52 flex h-80 mt-2 mb-2  items-center gap-2 flex-col  rounded-2xl"
        >
         <Pressable className="w-full h-60 rounded-t-2xl  ">
           <Image
-            className="w-full h-60 rounded-t-2xl"
+            className="w-full h-60 rounded-t-2xl mt-2"
             source={{uri:`http://10.0.0.248:5001/files/${item.image}`}} 
           />
         </Pressable>
