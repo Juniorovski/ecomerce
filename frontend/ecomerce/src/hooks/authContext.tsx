@@ -1,6 +1,7 @@
+import React, { useState, createContext, useEffect, ReactNode } from "react";
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState, createContext, useEffect, ReactNode } from "react";
+import LoadingScreen from "../animations/loadingScreen";
 
 interface AuthContextProps {
   isSigned: boolean;
@@ -25,39 +26,37 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isSigned, setIsSigned] = useState(false);
+  const [isSigned, setIsSigned] = useState<boolean | null>(null); 
 
   useEffect(() => {
     authToken();
   }, []);
 
   const authToken = async () => {
-    const token = await AsyncStorage.getItem("token");
-
+    const token = await AsyncStorage.getItem('token');
     if (token) {
       try {
-        const response = await api.get(`users/checkUser`, {
+        const res = await api.get(`users/checkUser`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log(response);
         setIsSigned(true);
       } catch (error) {
-        console.error("Erro ao validar o token:", error);
         setIsSigned(false);
+        console.log(error);
       }
     } else {
-      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem('token');
       setIsSigned(false);
     }
   };
 
+
   const signIn = async (token: string) => {
     try {
       await AsyncStorage.setItem("token", token);
-      setIsSigned(true);
+      setIsSigned(true); // Define como signed após o login
     } catch (error) {
       console.error("Erro ao salvar o token no signIn:", error);
     }
@@ -90,9 +89,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  if (isSigned === null) {
+    
+    return <LoadingScreen />;
+  }
+
   return (
     <AuthContext.Provider
-      value={{ isSigned, signIn, signUp, signOut, editProfile }}
+      value={{ isSigned , signIn, signUp, signOut, editProfile }}
     >
       {children}
     </AuthContext.Provider>

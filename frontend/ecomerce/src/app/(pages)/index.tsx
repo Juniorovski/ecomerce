@@ -3,12 +3,13 @@ import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
- import { AuthContext } from "@/src/hooks/AuthContext";
+import { AuthContext } from '@/src/hooks/AuthContext'
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoadingScreen from "@/src/animations/loadingScreen";
 
 //lembrar de instalar o FlashMessage
-//descobrir onde ta o erro da renderizacao
+//descobrir onde ta o erro da renderizacao //RESOLVIDO
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -39,11 +40,14 @@ const {signIn} = useContext(AuthContext);
         }); 
         await AsyncStorage.setItem('token', response.data.token)
         const token = await AsyncStorage.getItem('token');
-        if(token !=null){
-          await signIn(token);
-        }
-       
-        router.navigate('(tabs)');
+         if(token !== null){
+          await signIn(token); 
+          <LoadingScreen/>
+          router.navigate('(tabs)');
+         }else{
+           console.log("Token não encontrado!");
+         }
+         
       } catch (error) {   
       }
     }

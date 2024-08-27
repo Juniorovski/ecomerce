@@ -39,6 +39,7 @@ const {signUp}= useContext(AuthContext);
          await AsyncStorage.setItem('token', response.data.token);
          const token = await AsyncStorage.getItem('token')
          await  signUp(token ?? '');
+         router.navigate('(tabs)')
 
       } catch (error) {
          console.log(error)
