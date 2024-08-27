@@ -1,10 +1,30 @@
-import api from "@/api/api"; // Certifique-se de que o caminho e o arquivo estão corretos
+import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, ReactNode } from "react";
 
-export const AuthContext = createContext();
+interface AuthContextProps {
+  isSigned: boolean;
+  signIn: (token: string) => Promise<void>;
+  signUp: (token: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  editProfile: (token: string) => Promise<void>;
+}
 
-export const AuthProvider = ({children}) => {
+const defaultValue: AuthContextProps = {
+  isSigned: false,
+  signIn: async (token: string) => {},
+  signUp: async (token: string) => {},
+  signOut: async () => {},
+  editProfile: async (token: string) => {},
+};
+
+export const AuthContext = createContext<AuthContextProps>(defaultValue);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isSigned, setIsSigned] = useState(false);
 
   useEffect(() => {
@@ -34,7 +54,7 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const signIn = async (token) => {
+  const signIn = async (token: string) => {
     try {
       await AsyncStorage.setItem("token", token);
       setIsSigned(true);
@@ -43,7 +63,7 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const signUp = async (token) => {
+  const signUp = async (token: string) => {
     try {
       await AsyncStorage.setItem("token", token);
       setIsSigned(true);
@@ -52,7 +72,7 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const editProfile = async (token) => { // token é esperado como parâmetro aqui
+  const editProfile = async (token: string) => {
     try {
       await AsyncStorage.setItem("token", token);
       setIsSigned(true);

@@ -2,12 +2,13 @@ const jwt = require('jsonwebtoken');
  require('dotenv').config();
 
 
-const secret = process.env.SECRET_TOKEN;
+const secrete = process.env.SECRET_TOKEN;
+
 const createUsertoken = async (user,req,res)=>{
     const token = jwt.sign({
         name:user.name,
         id:user._id
-    },`${secret}`)
+    },`${secrete}`)
 
     res.status(200).json({message:"Você esta autenticado!",
         name:user.name,

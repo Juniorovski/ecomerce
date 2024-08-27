@@ -3,7 +3,9 @@ import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { AuthContext } from "@/src/hooks/authContext";
+import { AuthContext } from "@/src/hooks/AuthContext";
+import api from "@/api/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -13,11 +15,37 @@ export default function Register() {
  const [email,setEmail] = useState('');
  const [fone,setFone]= useState('');
  const [password , setPassword]= useState('');
- 
-const signUp = useContext(AuthContext);
 
-  const handlerRegister = () => {
-    router.navigate("(tabs)");
+const {signUp}= useContext(AuthContext);
+
+  const handlerRegister = async () => {
+    const userData={
+      name,
+      email,
+      fone,
+      password
+    }
+     if (!name||!email||!fone||!password){
+      console.log('Todos os campos devem ser preenchidos!');
+     }else{
+      try {
+         const response = await api.post(`users/register`, userData,{
+          headers:{
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          }
+         });
+
+         await AsyncStorage.setItem('token', response.data.token);
+         const token = await AsyncStorage.getItem('token')
+         await  signUp(token ?? '');
+
+      } catch (error) {
+         console.log(error)
+      }
+     }
+
+
   };
 
   const handlerLogin = () => {
@@ -42,7 +70,8 @@ const signUp = useContext(AuthContext);
           <Feather name="user" size={26} color={"#64748b"} />
           <TextInput
             placeholder="ex:jhon"
-            value=""
+            value={name}
+            onChangeText={(e)=>setName(e)}
             className="w-full flex-1 h-full bg-transparent text-2xl p-1"
           />
         </View>
@@ -50,7 +79,8 @@ const signUp = useContext(AuthContext);
           <Feather name="mail" size={26} color={"#64748b"} />
           <TextInput
             placeholder="ex:jhon@email.com"
-            value=""
+            value={email}
+            onChangeText={(e)=>setEmail(e)}
             className="w-full flex-1 h-full bg-transparent text-2xl p-1"
           />
         </View>
@@ -59,7 +89,8 @@ const signUp = useContext(AuthContext);
           <Feather name="phone" size={26} color={"#64748b"} />
           <TextInput
             placeholder="ex:99775544"
-            value=""
+            value={fone}
+            onChangeText={(e)=>setFone(e)}
             className="w-full flex-1 h-full bg-transparent text-2xl p-1"
           />
         </View>
@@ -67,7 +98,9 @@ const signUp = useContext(AuthContext);
           <Feather name="eye" size={26} color={"#64748b"} />
           <TextInput
             placeholder="ex:1233"
-            value=""
+            value={password}
+            onChangeText={(e)=>setPassword(e)}
+            secureTextEntry={true}
             className="w-full flex-1 h-full bg-transparent text-2xl p-1 "
           />
         </View>

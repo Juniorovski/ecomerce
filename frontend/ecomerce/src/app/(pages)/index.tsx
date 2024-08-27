@@ -3,21 +3,19 @@ import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-
-import { AuthContext } from "@/src/hooks/authContext";
+ import { AuthContext } from "@/src/hooks/AuthContext";
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //lembrar de instalar o FlashMessage
+//descobrir onde ta o erro da renderizacao
 
 const statusBarHeight = Constants.statusBarHeight;
-
 
 export default function Login() {
  const [email,setEmail]= useState('');
 const [password,setPassWord]= useState('');
-const signIn = useContext(AuthContext);
-console.log(signIn)
+const {signIn} = useContext(AuthContext);
 
   const handlerRegister = () => {
     router.replace("register");
@@ -38,21 +36,18 @@ console.log(signIn)
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           }
-        });
-         
+        }); 
         await AsyncStorage.setItem('token', response.data.token)
-        
-         const token =  await AsyncStorage.getItem('token');
-         
-        router.navigate('(tabs)')
-      } catch (error) {
-        
+        const token = await AsyncStorage.getItem('token');
+        if(token !=null){
+          await signIn(token);
+        }
+       
+        router.navigate('(tabs)');
+      } catch (error) {   
       }
     }
-
   };
-
-  
   return (
     <View
       className="flex-1 bg-orange-500 "

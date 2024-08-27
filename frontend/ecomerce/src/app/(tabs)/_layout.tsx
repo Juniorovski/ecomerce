@@ -2,7 +2,7 @@ import {  Tabs } from "expo-router";
 
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-export default function RootLayout() {
+export default function Layout() {
   return (
    <Tabs screenOptions={ 
     {tabBarActiveTintColor:"blue",

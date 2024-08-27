@@ -5,10 +5,12 @@ import Constants from "expo-constants";
 import { Link } from "expo-router";
 
 
-
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Profile() {
+
+
+
   return (
     <View
       className="flex-1  items-center"
