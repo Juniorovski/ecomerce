@@ -3,24 +3,23 @@ import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { AuthContext } from '@/src/hooks/AuthContext'
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "@/src/hooks/AuthContext";
 import LoadingScreen from "@/src/animations/loadingScreen";
 
+
+
 //lembrar de instalar o FlashMessage
-//descobrir onde ta o erro da renderizacao //RESOLVIDO
+
 
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Login() {
  const [email,setEmail]= useState('');
 const [password,setPassWord]= useState('');
-const {signIn} = useContext(AuthContext);
+const {signIn}= useContext(AuthContext);
 
-  const handlerRegister = () => {
-    router.replace("register");
-  };
 
   const handlerLogin = async  () => {
     const userData={
@@ -40,18 +39,25 @@ const {signIn} = useContext(AuthContext);
         }); 
         await AsyncStorage.setItem('token', response.data.token)
         const token = await AsyncStorage.getItem('token');
-         if(token !== null){
-          await signIn(token); 
-          <LoadingScreen/>
-          router.navigate('(tabs)');
+         if(token){
+          await signIn(token);
+           
+          router.replace('(tabs)');
          }else{
            console.log("Token não encontrado!");
          }
          
       } catch (error) {   
+        console.log(`Ocorreu um erro, tipo do erro:  ${error} !`)
       }
     }
   };
+
+  const handlerRegister = () => {
+  // return <LoadingScreen/>
+    router.navigate("register");
+  };
+
   return (
     <View
       className="flex-1 bg-orange-500 "

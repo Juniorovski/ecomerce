@@ -1,104 +1,85 @@
-import React, { useState, createContext, useEffect, ReactNode } from "react";
-import api from "@/api/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingScreen from "../animations/loadingScreen";
 
-interface AuthContextProps {
-  isSigned: boolean;
-  signIn: (token: string) => Promise<void>;
-  signUp: (token: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  editProfile: (token: string) => Promise<void>;
+import api from '@/api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, ReactNode, useEffect, useState } from 'react'
+
+
+interface AuthContextProps{
+  isSigned:boolean,
+  signIn:(token:string) => Promise<void>,
 }
 
 const defaultValue: AuthContextProps = {
   isSigned: false,
-  signIn: async (token: string) => {},
-  signUp: async (token: string) => {},
-  signOut: async () => {},
-  editProfile: async (token: string) => {},
-};
-
-export const AuthContext = createContext<AuthContextProps>(defaultValue);
-
-interface AuthProviderProps {
-  children: ReactNode;
+  signIn: async () => {},
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isSigned, setIsSigned] = useState<boolean | null>(null); 
+export const AuthContext= createContext<AuthContextProps>(defaultValue);
+  
+interface AuthProviderProps{
+  children :ReactNode;
+}
 
-  useEffect(() => {
-    authToken();
-  }, []);
+export const AuthProvider = ({children}: AuthProviderProps) => {
+  const [isSigned, setIsSigned]= useState(false);
 
-  const authToken = async () => {
-    const token = await AsyncStorage.getItem('token');
+ useEffect(()=>{
+  authToken();
+ },[]);
+
+ const authToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem("token");
+
     if (token) {
       try {
-        const res = await api.get(`users/checkUser`, {
+        const response = await api.get("users/checkUser", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setIsSigned(true);
+
+        if (response.status === 200) {
+          setIsSigned(true);
+        } else {
+          setIsSigned(false);
+        }
       } catch (error) {
+        console.error("Erro ao validar o token:", error);
         setIsSigned(false);
-        console.log(error);
       }
     } else {
-      await AsyncStorage.removeItem('token');
       setIsSigned(false);
     }
-  };
-
+  } catch (error) {
+    console.error("Erro ao recuperar o token:", error);
+    setIsSigned(false);
+  }
+};
 
   const signIn = async (token: string) => {
     try {
       await AsyncStorage.setItem("token", token);
-      setIsSigned(true); // Define como signed após o login
+      if(token){
+        await AsyncStorage.getItem('token')
+        setIsSigned(true);  
+      }
+      else{
+        setIsSigned(false);
+      } 
     } catch (error) {
       console.error("Erro ao salvar o token no signIn:", error);
     }
   };
 
-  const signUp = async (token: string) => {
-    try {
-      await AsyncStorage.setItem("token", token);
-      setIsSigned(true);
-    } catch (error) {
-      console.error("Erro ao salvar o token no signUp:", error);
-    }
-  };
-
-  const editProfile = async (token: string) => {
-    try {
-      await AsyncStorage.setItem("token", token);
-      setIsSigned(true);
-    } catch (error) {
-      console.error("Erro ao salvar o token no editProfile:", error);
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      await AsyncStorage.removeItem("token");
-      setIsSigned(false);
-    } catch (error) {
-      console.error("Erro ao remover o token no signOut:", error);
-    }
-  };
-
-  if (isSigned === null) {
-    
-    return <LoadingScreen />;
-  }
-
   return (
-    <AuthContext.Provider
-      value={{ isSigned , signIn, signUp, signOut, editProfile }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
+      <AuthContext.Provider 
+      value={{isSigned,signIn}}
+      >
+
+        {children}
+      </AuthContext.Provider>
+  )
+}
+
+

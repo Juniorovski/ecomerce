@@ -9,14 +9,14 @@ const LoadingScreen = () => {
 
     useEffect(()=>{
         const timer = setTimeout(()=>{
-            router.replace('tabs');
+            
         },2000);
         return ()=>clearTimeout(timer);
-    })
+    },[])
 
     return ( 
         <View style={[styles.container, styles.horizontal]}>
-            <ActivityIndicator size={40} color={"#00f"}/>
+            <ActivityIndicator size={"large"} color={"#00f"}/>
         </View>
      );
 }

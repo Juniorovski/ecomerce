@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { AuthContext } from "@/src/hooks/AuthContext";
+
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -16,7 +16,7 @@ export default function Register() {
  const [fone,setFone]= useState('');
  const [password , setPassword]= useState('');
 
-const {signUp}= useContext(AuthContext);
+
 
   const handlerRegister = async () => {
     const userData={
@@ -38,8 +38,8 @@ const {signUp}= useContext(AuthContext);
 
          await AsyncStorage.setItem('token', response.data.token);
          const token = await AsyncStorage.getItem('token')
-         await  signUp(token ?? '');
-         router.navigate('(tabs)')
+        
+         router.replace('(tabs)')
 
       } catch (error) {
          console.log(error)
