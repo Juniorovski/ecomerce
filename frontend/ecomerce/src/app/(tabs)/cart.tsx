@@ -32,7 +32,7 @@ export default function Cart() {
               </Text>
               <View className="flex-row m-1 items-center">
                 <TouchableOpacity>
-                  <View className="bg-blue-600 rounded-xl w-10 items-center ml-4">
+                  <View className="bg-blue-500 rounded-xl w-10 items-center ml-4">
                     <Text className="text-white text-4xl font-bold ">-</Text>
                   </View>
                 </TouchableOpacity>
@@ -40,7 +40,7 @@ export default function Cart() {
                 <Text className="text-stone-950 text-3xl font-bold p-2">0</Text>
 
                 <TouchableOpacity>
-                  <View className="bg-blue-600 rounded-xl w-10 items-center mr-4">
+                  <View className="bg-blue-500 rounded-xl w-10 items-center mr-4">
                     <Text className="text-white text-4xl font-bold ">+</Text>
                   </View>
                 </TouchableOpacity>
