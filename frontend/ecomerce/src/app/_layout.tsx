@@ -20,7 +20,6 @@ export default function StackLayout() {
          )}
       </Stack>
     </AuthProvider>
-     
-    
+       
   );
 }
