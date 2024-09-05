@@ -15,7 +15,7 @@ export default function Cart() {
           Pedidos
         </Text>
 
-        <View className="flex-row w-full mb-2 p-1 items-center divide-x-2 divide-gray-900 ">
+        <View className="flex-row w-full mb-2 p-1 items-center ">
           <Image
             source={{ uri: `https://github.com/dog.png` }}
             className="w-36 h-36  md:h-60 rounded-2xl m-2 "
@@ -26,13 +26,13 @@ export default function Cart() {
               Hamburger
             </Text>
             <Text className="text-slate-600 text-2xl  ">Lorem Ipsum Dolor</Text>
-            <View className="flex-row mt-10 items-center justify-between">
+            <View className="flex-row mt-4 items-center justify-between">
               <Text className="text-stone-950 text-3xl font-bold  ">
                 $10.00
               </Text>
               <View className="flex-row m-1 items-center">
                 <TouchableOpacity>
-                  <View className="bg-blue-500 rounded-xl w-10 items-center ml-4">
+                  <View className="bg-blue-500 rounded-xl w-10 items-center ml-12">
                     <Text className="text-white text-4xl font-bold ">-</Text>
                   </View>
                 </TouchableOpacity>
@@ -40,7 +40,7 @@ export default function Cart() {
                 <Text className="text-stone-950 text-3xl font-bold p-2">0</Text>
 
                 <TouchableOpacity>
-                  <View className="bg-blue-500 rounded-xl w-10 items-center mr-4">
+                  <View className="bg-blue-500 rounded-xl w-10 items-center">
                     <Text className="text-white text-4xl font-bold ">+</Text>
                   </View>
                 </TouchableOpacity>
@@ -49,7 +49,7 @@ export default function Cart() {
           </View>
         </View>
 
-        <View className="flex-col m-2 mt-10">
+        <View className="flex-col m-2 mt-10 divide-y-2 divide-slate-700">
         <Text className="text-stone-950 text-3xl font-bold">
           Metodos de Pagamento
         </Text>
@@ -67,11 +67,15 @@ export default function Cart() {
           <Text className="text-stone-600 text-2xl font-bold">Total</Text>
           <Text className="text-stone-950 text-3xl font-bold">$11.00</Text>
         </View>
-        
+           <View className="flex-row bg-sky-600 w-full">
+            <TouchableOpacity > 
+              <Text>Fazer Pedidos-$11.00</Text>
+            </TouchableOpacity>
+           </View>
       </View>
 
       </View>
-
+      
     </View>
   );
 }
