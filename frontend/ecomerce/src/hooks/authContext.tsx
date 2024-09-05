@@ -38,9 +38,11 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-
+        
+        setIsSigned(true)
         if (response.status === 200) {
           setIsSigned(true);
+          
         } else {
           setIsSigned(false);
         }
@@ -60,9 +62,11 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   const signIn = async (token: string) => {
     try {
       await AsyncStorage.setItem("token", token);
+      setIsSigned(true);
       if(token){
         await AsyncStorage.getItem('token')
         setIsSigned(true);  
+        
       }
       else{
         setIsSigned(false);

@@ -39,9 +39,9 @@ const {signIn}= useContext(AuthContext);
         }); 
         await AsyncStorage.setItem('token', response.data.token)
         const token = await AsyncStorage.getItem('token');
+        
          if(token){
           await signIn(token);
-           
           router.replace('(tabs)');
          }else{
            console.log("Token não encontrado!");
