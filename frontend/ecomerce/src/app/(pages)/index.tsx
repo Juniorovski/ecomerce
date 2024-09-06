@@ -54,7 +54,6 @@ const {signIn}= useContext(AuthContext);
   };
 
   const handlerRegister = () => {
-  // return <LoadingScreen/>
     router.navigate("register");
   };
 

@@ -8,18 +8,27 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 const LoadingScreen = () => {
 
     useEffect(()=>{
-        const timer = setTimeout(()=>{
-            
-        },2000);
-        return ()=>clearTimeout(timer);
+        animationIndicator();
+        console.log("iniciando animacoao")
     },[])
+
+    const animationIndicator =()=>{
+      const timer = setTimeout(()=>{
+        router.navigate('register') 
+        
+     },2000);
+     return ()=>clearTimeout(timer);
+     }
 
     return ( 
         <View style={[styles.container, styles.horizontal]}>
             <ActivityIndicator size={"large"} color={"#00f"}/>
         </View>
      );
+
+     
 }
+
 
 const styles = StyleSheet.create({
     container: {

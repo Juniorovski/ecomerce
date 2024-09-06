@@ -13,7 +13,7 @@ const secret = process.env.SECRET_TOKEN;
 module.exports = class UserController {
 
     //criar usuario
-  static async register(req, res) {
+  static async register(req, res, next) {
     const { name, email, fone, password } = req.body;
 
     if (!name) {
@@ -37,6 +37,7 @@ module.exports = class UserController {
     if (userExists) {
       res.status(422).json({ msg: "Email ja cadastrado!" });
     }
+   next;
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -97,7 +98,7 @@ module.exports = class UserController {
       const token = getToken(req);
       const decoded = jwt.verify(token,`${secret}`);
      currentUser = await User.findById(decoded.id);
-    currentUser.password= undefined;
+     currentUser.password= undefined;
     }else{
       currentUser=null;
     }
@@ -112,10 +113,8 @@ module.exports = class UserController {
     }
     res.status(200).json({user});
   }
-
- 
 //atualiza o user
-static async update (req,res){ 
+static async update (req,res,next){ 
   const id = req.params.id;
   const token = getToken(req);
   const user = await getUserByToken(token);
