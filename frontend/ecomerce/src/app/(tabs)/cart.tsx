@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Cart() {
-
+ 
 
   return (
     <View
