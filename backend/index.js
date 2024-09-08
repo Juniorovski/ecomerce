@@ -19,7 +19,7 @@ app.use('/categoria',categoriaRouter);
 
 app.get('/',(req,res)=>{
     res.send('Hello, world!')})
-
+    
 app.listen(5001,(req,res)=>{
     console.log('Servidor online!');
 });

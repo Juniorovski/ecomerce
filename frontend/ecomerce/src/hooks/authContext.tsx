@@ -17,14 +17,15 @@ const defaultValue: AuthContextProps = {
 export const AuthContext= createContext<AuthContextProps>(defaultValue);
   
 interface AuthProviderProps{
-  children :ReactNode;
+  children: ReactNode;
 }
 
 export const AuthProvider = ({children}: AuthProviderProps) => {
-  const [isSigned, setIsSigned]= useState(false);
+  const [isSigned, setIsSigned]=  useState (false);
 
  useEffect(()=>{
   authToken();
+  
  },[]);
 
  const authToken = async () => {
@@ -38,13 +39,14 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        
-        if (response.status === 200) {
+
+       if (response.status === 200) {
           setIsSigned(true);
-          
+          //console.log(token)
         } else {
           setIsSigned(false);
         }
+
       } catch (error) {
         console.error("Erro ao validar o token:", error);
         setIsSigned(false);
@@ -78,7 +80,6 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
       <AuthContext.Provider 
       value={{isSigned,signIn}}
       >
-
         {children}
       </AuthContext.Provider>
   )

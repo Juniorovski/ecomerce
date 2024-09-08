@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useEffect } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 
 
@@ -8,24 +8,21 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 const LoadingScreen = () => {
 
     useEffect(()=>{
-        animationIndicator();
-        console.log("iniciando animacoao")
+        animationIndicator(); 
     },[])
 
     const animationIndicator =()=>{
       const timer = setTimeout(()=>{
-        router.navigate('register') 
-        
+        router.push('(tabs)')
      },2000);
      return ()=>clearTimeout(timer);
      }
-
     return ( 
         <View style={[styles.container, styles.horizontal]}>
-            <ActivityIndicator size={"large"} color={"#00f"}/>
+           <Text style={[ styles.text]}>Iniciando o Aplicativo aguarde...</Text>
+            <ActivityIndicator size={70}  color={"#00f"}/>
         </View>
      );
-
      
 }
 
@@ -42,7 +39,9 @@ const styles = StyleSheet.create({
     },
     text:{
       fontSize:30,
-       color:"#000"
+       color:"#000",
+       textAlign:'center',
+       fontWeight:'bold'
     }
   });
  

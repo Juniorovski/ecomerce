@@ -6,7 +6,6 @@ import { router } from "expo-router";
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "@/src/hooks/AuthContext";
-import LoadingScreen from "@/src/animations/loadingScreen";
 
 
 
@@ -37,6 +36,7 @@ const {signIn}= useContext(AuthContext);
             "Content-Type": "application/json",
           }
         }); 
+
         await AsyncStorage.setItem('token', response.data.token)
         const token = await AsyncStorage.getItem('token');
         

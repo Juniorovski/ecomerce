@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
-import { Slot } from 'expo-router';
+//import { Slot } from 'expo-router';
 import '../styles/global.css'
-import { MainPage } from '.';
 import { AuthProvider } from '../hooks/AuthContext';
 
+import { Slot } from 'expo-router';
+
 export default function StackLayout() {
- 
   return (
-  <AuthProvider>
-    <Slot/>
-  </AuthProvider>
- 
-   
+    <AuthProvider>
+       <Slot/>
+    </AuthProvider>
+  
   );
 }
