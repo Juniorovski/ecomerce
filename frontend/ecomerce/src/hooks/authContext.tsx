@@ -7,11 +7,13 @@ import React, { createContext, ReactNode, useEffect, useState } from 'react'
 interface AuthContextProps{
   isSigned:boolean,
   signIn:(token:string) => Promise<void>,
+  signOut:()=>Promise<void>,
 }
 
 const defaultValue: AuthContextProps = {
   isSigned: false,
   signIn: async () => {},
+  signOut: async () => {},
 }
 
 export const AuthContext= createContext<AuthContextProps>(defaultValue);
@@ -76,9 +78,19 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     }
   };
 
+  const signOut = async () =>{
+    try {
+      await AsyncStorage.removeItem('token');
+      setIsSigned(false);
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
       <AuthContext.Provider 
-      value={{isSigned,signIn}}
+      value={{isSigned,signIn,signOut}}
       >
         {children}
       </AuthContext.Provider>

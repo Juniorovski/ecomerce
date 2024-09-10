@@ -5,7 +5,7 @@ import { Banner } from "../../components/banner";
 import { Search } from "../../components/search";
 import Sections from "../../components/sections";
 import Card from "../../components/card";
-import PagerView from "react-native-pager-view";
+
 
 const statusBarHeight = Constants.statusBarHeight;
 

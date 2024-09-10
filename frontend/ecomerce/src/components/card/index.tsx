@@ -21,30 +21,29 @@ export default function Card() {
       console.log(error);
     }
   };
-  
     
 return(
 <SafeAreaView>
       <FlatList
-      data={produtoData}
+      data={produtoData.slice(0,10)}
       keyExtractor={(item) =>item.id}
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       renderItem={({item})=>{
          return(
         <View
-         
-          className="w-52 flex h-80 mt-2 mb-2  items-center gap-2 flex-col  rounded-2xl"
+          
+          className="w-52 flex h-100 mt-2 mb-2  items-center gap-2 flex-col  rounded-2xl"
            >
           <Pressable className="w-full h-60 rounded-t-2xl  ">
             <Image
-              className="w-full h-60 rounded-t-2xl mt-2"
+              className="w-full h-60 rounded-t-2xl mt-1"
               source={{uri:`http://10.0.0.248:5001/files/${item.image}`}} 
             />
           </Pressable>
-         <View className="w-full flex flex-col items-center "> 
-           <Text className="font-bold text-xl">{item.name.slice(0,15)}...</Text>
-            <Text className="color-slate-700 text-xl">{item.categoria.name}</Text>
+         <View className="w-full flex flex-col items-start justify-center "> 
+           <Text className="text-xl flex-col">{item.name}</Text>
+           <Text className="text-3xl font-serif">R$ {item.preco}</Text>
           </View>
           </View> 
          )

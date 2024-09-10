@@ -147,6 +147,7 @@ static async update (req,res,next){
     res.status(422).json({
       message:"Por favor, utilize outro email!",
     });
+    
     return;
   }
 

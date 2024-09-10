@@ -7,13 +7,10 @@ export const MainPage = () => {
   console.log(`Logado : ${isSigned}`);
 
   return (
+
     <Stack screenOptions={{ headerShown: false }}>
       {isSigned ? (
-        <>
-          <Stack.Screen name="(animations)" />
-
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </>
+          <Stack.Screen name="(animations)" />  
       ) : (
         <Stack.Screen name="(pages)" options={{ headerShown: false }} />
       )}

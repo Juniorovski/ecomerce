@@ -6,11 +6,13 @@ interface Props {
   icon?: {
     name: string;
     size: number;
+    
   };
   name: string;
   size: "text-lg" | "text-xl" | "text-2xl" | "text-3xl";
   action: () => void;
   seta: string;
+  
 }
 export default function ({ icon, name, size, action, seta }: Props) {
   return (
@@ -19,9 +21,9 @@ export default function ({ icon, name, size, action, seta }: Props) {
         onPress={action}
         className="flex flex-row justify-between px-2 "
       >
-        <View className="flex flex-row gap-1 items-center rounded-lg">
-          {icon && <Feather name={icon.name} size={icon.size} />}
-          <Text className={`${size} font-bold my-4 items-center`}>{name}</Text>
+        <View className="flex flex-row gap-1  items-center rounded-lg">
+          {icon && <Feather name = {icon.name} size={icon.size} />}
+          <Text className={`${size}  font-bold my-4 items-center`}>{name}</Text>
         </View>
         <View>
           <Text className={`${size} font-bold my-4 items-center justify-end`}>
