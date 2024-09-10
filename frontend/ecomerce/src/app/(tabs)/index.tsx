@@ -5,6 +5,7 @@ import { Banner } from "../../components/banner";
 import { Search } from "../../components/search";
 import Sections from "../../components/sections";
 import Card from "../../components/card";
+import PagerView from "react-native-pager-view";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -27,7 +28,9 @@ export default function Index() {
         action={() => console.log("clicou no veja todos")}
         size="text-3xl"
       />
-      <View className=" w-full px-4 flex-row gap-2 flex justify-center mb-4">
+      
+
+    <View className=" w-full px-4 flex-row gap-2 flex justify-center mb-4">
         <Card />
       </View>
 
