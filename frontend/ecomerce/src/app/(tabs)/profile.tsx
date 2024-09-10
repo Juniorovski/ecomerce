@@ -41,6 +41,9 @@ export default function Profile() {
     }
   };
 
+  const handlerEditProfile = ()=>{
+    router.navigate('(editprofile)')
+  }
   const handlerLogout = async () => {
     try {
       await signOut();
@@ -76,14 +79,14 @@ export default function Profile() {
           icon={{ name: "user", size: 24 }}
           name="Editar Perfil"
           size="text-2xl"
-          action={() => ""}
+          action={() => handlerEditProfile()}
           seta=">"
         />
         <Section
           icon={{ name: "bell", size: 24 }}
           name="Notificações"
           size="text-2xl"
-          action={() => console.log("Edite perfil clicado")}
+          action={() => ''}
           seta=">"
         />
         <Section

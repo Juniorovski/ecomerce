@@ -8,12 +8,14 @@ interface AuthContextProps{
   isSigned:boolean,
   signIn:(token:string) => Promise<void>,
   signOut:()=>Promise<void>,
+  editProfile:(token:string)=> Promise<void>,
 }
 
 const defaultValue: AuthContextProps = {
   isSigned: false,
   signIn: async () => {},
   signOut: async () => {},
+  editProfile:async()=>{},
 }
 
 export const AuthContext= createContext<AuthContextProps>(defaultValue);
@@ -78,6 +80,15 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     }
   };
 
+ const editProfile = async (token:string) =>{
+    try {
+       await AsyncStorage.setItem('token',token);
+        setIsSigned(true);
+    } catch ( error) {
+       console.log(error);
+    }
+ }
+
   const signOut = async () =>{
     try {
       await AsyncStorage.removeItem('token');
@@ -90,7 +101,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
   return (
       <AuthContext.Provider 
-      value={{isSigned,signIn,signOut}}
+      value={{isSigned,signIn,signOut, editProfile}}
       >
         {children}
       </AuthContext.Provider>

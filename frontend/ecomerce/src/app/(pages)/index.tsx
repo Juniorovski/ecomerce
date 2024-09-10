@@ -7,48 +7,43 @@ import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "@/src/hooks/AuthContext";
 
-
-
 //lembrar de instalar o FlashMessage
-
 
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Login() {
- const [email,setEmail]= useState('');
-const [password,setPassWord]= useState('');
-const {signIn}= useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassWord] = useState("");
+  const { signIn } = useContext(AuthContext);
 
-
-  const handlerLogin = async  () => {
-    const userData={
+  const handlerLogin = async () => {
+    const userData = {
       email,
       password,
     };
 
-    if (!email || !password){
-      console.log('Todos os campos devem ser preenchidos!')
-    }else{
+    if (!email || !password) {
+      console.log("Todos os campos devem ser preenchidos!");
+    } else {
       try {
-        const response = await api.post(`users/login`, userData,{
-          headers:{
+        const response = await api.post(`users/login`, userData, {
+          headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
-          }
-        }); 
+          },
+        });
 
-        await AsyncStorage.setItem('token', response.data.token)
-        const token = await AsyncStorage.getItem('token');
-        
-         if(token){
+        await AsyncStorage.setItem("token", response.data.token);
+        const token = await AsyncStorage.getItem("token");
+
+        if (token) {
           await signIn(token);
-          router.replace('(tabs)');
-         }else{
-           console.log("Token não encontrado!");
-         }
-         
-      } catch (error) {   
-        console.log(`Ocorreu um erro, tipo do erro:  ${error} !`)
+          router.replace("(tabs)");
+        } else {
+          console.log("Token não encontrado!");
+        }
+      } catch (error) {
+        console.log(`Ocorreu um erro, tipo do erro:  ${error} !`);
       }
     }
   };
@@ -75,7 +70,7 @@ const {signIn}= useContext(AuthContext);
           <Feather name="user" size={26} color={"#64748b"} />
           <TextInput
             placeholder="ex:jhon@email.com"
-            onChangeText={(e)=>setEmail(e)}
+            onChangeText={(e) => setEmail(e)}
             value={email}
             className="w-full flex-1 h-full bg-transparent text-2xl p-1"
           />
@@ -85,7 +80,7 @@ const {signIn}= useContext(AuthContext);
           <Feather name="eye" size={26} color={"#64748b"} />
           <TextInput
             placeholder="ex:1233"
-            onChangeText={(e)=> setPassWord(e)}
+            onChangeText={(e) => setPassWord(e)}
             value={password}
             secureTextEntry={true}
             className="w-full flex-1 h-full bg-transparent text-2xl p-1 "
