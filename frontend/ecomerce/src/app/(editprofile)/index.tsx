@@ -5,7 +5,8 @@ import { Entypo, Feather, FontAwesome } from "@expo/vector-icons";
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FlashMessage, { showMessage } from "react-native-flash-message";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
+
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -56,7 +57,7 @@ const EditProfile = () => {
 
         const token = await AsyncStorage.getItem("token");
         if (!userId) throw new Error("Não foi possível obter o userId");
-        
+
         const res = await api.patch(`users/update/:${userId}`, userData, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -64,15 +65,20 @@ const EditProfile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(res.status)
+        if (res.status === 200) {
+          showMessage({
+            message: "Sucesso!",
+            description: "Usuario atualizado com sucesso!",
+            type: "success",
+            icon: "success",
+          });
+          
+        }
+       
 
-        showMessage({
-          message: "Sucesso!",
-          description: "Usuario atualizado com sucesso!",
-          type: "success",
-          icon: "success",
-        });
+        router.navigate("profile");
 
-        router.navigate("(tabs)");
       } catch (error) {
         console.log(error);
 
@@ -91,7 +97,10 @@ const EditProfile = () => {
       className="flex-1  items-center"
       style={{ marginTop: statusBarHeight - 30 }}
     >
-      <FlashMessage position={"center"} />
+      <FlashMessage position={"center"} textStyle={{
+        fontSize:17,
+        fontWeight:'bold'
+      }} />
 
       <View className="w-full h-64 flex flex-row items-center justify-center gap-2 mt-6 mb-2 px-4 ">
         <Image className="w-40 h-40 rounded-full mt-4 px-4 mb-2 mx-2 bg-slate-200" 

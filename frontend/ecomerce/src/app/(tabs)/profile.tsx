@@ -6,17 +6,22 @@ import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "@/src/hooks/AuthContext";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
   const { signOut } = useContext(AuthContext);
+  const [isLoged, setIsLoged] = useState(false);
+
 
   useEffect(() => {
     fetchUserData();
   }, []);
 
+
+   
   const fetchUserData = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
@@ -29,8 +34,11 @@ export default function Profile() {
             },
           });
           if (token) {
-            
+            setIsLoged(true);
             setUserData(response.data);
+          }
+          else{
+            setIsLoged(false);
           }
         } catch (error) {
           console.log(error);
@@ -57,13 +65,17 @@ export default function Profile() {
     }
   };
   return (
-    <View
+    <SafeAreaView
       className="flex-1  items-center"
       style={{ marginTop: statusBarHeight - 30 }}
     >
       {userData && (
-        <View className="w-full h-64 flex flex-row items-center gap-2 mt-8 mb-2 px-4 ">
-          <Image
+
+        < View className="w-full h-64 flex flex-row items-center gap-2 mt-8 mb-2 px-4 ">
+          <>
+          { isLoged ? ( 
+            <>
+           <Image
             className="w-32 h-32 rounded-full mt-4 px-4 mb-2 mx-2 "
             source={{
               uri: `http://10.0.0.248:5001/files/users/${userData.image}`,
@@ -76,8 +88,31 @@ export default function Profile() {
               {userData.email}
             </Text>
           </View>
+          </>
+          )
+          :
+          (
+          <>
+          <Image
+            className="w-32 h-32 rounded-full mt-4 px-4 mb-2 mx-2 bg-slate-400 "
+            source={{
+              uri: `https://github.com/avatar.png`,
+            }}
+            resizeMode="cover"
+          />
+             
+          <View className="flex flex-col mb-2 ">
+            <Text className="text-3xl font-bold ">Name</Text>
+            <Text className="text-xl font-bold color-slate-500">
+              test@test.com
+            </Text>
+          </View>
+          </>
+          )}   
+          </>
         </View>
       )}
+      
       <View className="w-full h-full flex flex-col gap-2 mt-4 mb-2 px-4 ">
         <Section
           icon={{ name: "user", size: 24 }}
@@ -123,6 +158,6 @@ export default function Profile() {
           seta=">"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
