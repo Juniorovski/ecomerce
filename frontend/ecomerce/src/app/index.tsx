@@ -10,7 +10,9 @@ export const MainPage = () => {
 
     <Stack screenOptions={{ headerShown: false }}>
       {isSigned ? (
+        
           <Stack.Screen name="(animations)" />  
+          
       ) : (
         <Stack.Screen name="(pages)" options={{ headerShown: false }} />
       )}

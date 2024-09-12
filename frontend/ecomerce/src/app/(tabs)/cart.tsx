@@ -11,14 +11,30 @@ export default function Cart() {
   const [total , setTotal]= useState(Number);
 
   
+  const subtrairQuantidade = ()=>{
+
+    if(quantidade<=0){
+      amount = 0;
+    }
+    else{
+      quant = quantidade;
+      amount= quant/value;
+      setQuantidade (quantidade-1);
+      setValor(value)
+      setTotal(amount)
+    }
+   
+  }
+
   let quant:number = 0;
   let value:number = 10;
   let amount:number = 0;
+
   const somaQuantidade =()=>{
-   quant++;
+   quant = quantidade;
    amount = quant*value;
   
-   setQuantidade(quant);
+   setQuantidade(quantidade+1);
    setValor(value);
    setTotal(amount);
 
@@ -52,7 +68,7 @@ export default function Cart() {
               </Text>
               
               <View className="flex-row m-1 items-center">
-                <TouchableOpacity>
+                <TouchableOpacity onPress={subtrairQuantidade}>
                   <View className="bg-blue-500 rounded-xl w-10 items-center ml-12">
                     <Text className="text-white text-4xl font-bold ">-</Text>
                   </View>

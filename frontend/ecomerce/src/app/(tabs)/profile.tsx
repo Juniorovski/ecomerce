@@ -42,7 +42,10 @@ export default function Profile() {
   };
 
   const handlerEditProfile = ()=>{
-    router.navigate('(editprofile)')
+    if(userData){
+      router.push('(editprofile)')
+    }
+    
   }
   const handlerLogout = async () => {
     try {
@@ -65,6 +68,7 @@ export default function Profile() {
             source={{
               uri: `http://10.0.0.248:5001/files/users/${userData.image}`,
             }}
+            resizeMode="cover"
           />
           <View className="flex flex-col mb-2 ">
             <Text className="text-3xl font-bold ">{userData.name}</Text>
