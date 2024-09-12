@@ -68,8 +68,12 @@ export default function Profile() {
     <SafeAreaView
       className="flex-1  items-center"
       style={{ marginTop: statusBarHeight - 30 }}
+
     >
-      {userData && (
+
+     {isLoged ? (
+      <>
+       {userData && (
 
         < View className="w-full h-64 flex flex-row items-center gap-2 mt-8 mb-2 px-4 ">
          
@@ -89,6 +93,31 @@ export default function Profile() {
  
         </View>
       )}
+      </>
+     ):(
+
+      <>
+       < View className="w-full h-64 flex flex-row items-center gap-2 mt-8 mb-2 px-4 ">
+         
+         <Image
+          className="w-32 h-32 rounded-full mt-4 px-4 mb-2 mx-2 "
+          source={{
+            uri: `https://github.com/avatar.png`,
+          }}
+          resizeMode="cover"
+        />
+        <View className="flex flex-col mb-2 ">
+          <Text className="text-3xl font-bold ">Test</Text>
+          <Text className="text-xl font-bold color-slate-500">
+            test@test.com
+          </Text>
+        </View>
+
+      </View>
+      </>
+     )}
+
+     
       
       <View className="w-full h-full flex flex-col gap-2 mt-4 mb-2 px-4 ">
         <Section
