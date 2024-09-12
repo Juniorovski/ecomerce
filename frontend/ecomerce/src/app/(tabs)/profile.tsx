@@ -72,9 +72,7 @@ export default function Profile() {
       {userData && (
 
         < View className="w-full h-64 flex flex-row items-center gap-2 mt-8 mb-2 px-4 ">
-          <>
-          { isLoged ? ( 
-            <>
+         
            <Image
             className="w-32 h-32 rounded-full mt-4 px-4 mb-2 mx-2 "
             source={{
@@ -88,28 +86,7 @@ export default function Profile() {
               {userData.email}
             </Text>
           </View>
-          </>
-          )
-          :
-          (
-          <>
-          <Image
-            className="w-32 h-32 rounded-full mt-4 px-4 mb-2 mx-2 bg-slate-400 "
-            source={{
-              uri: `https://github.com/avatar.png`,
-            }}
-            resizeMode="cover"
-          />
-             
-          <View className="flex flex-col mb-2 ">
-            <Text className="text-3xl font-bold ">Name</Text>
-            <Text className="text-xl font-bold color-slate-500">
-              test@test.com
-            </Text>
-          </View>
-          </>
-          )}   
-          </>
+ 
         </View>
       )}
       
