@@ -5,19 +5,20 @@ import {
   Pressable,
   FlatList,
   TouchableOpacity,
-  Button,
+  
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import api from "@/api/api";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Card() {
   const [produtoData, setProdutoData] = useState([]);
   const [likedItems, setLikedItems] = useState([]);
-
+ const router = useRouter();
   useEffect(() => {
     fetchData();
   }, []);
@@ -32,9 +33,17 @@ export default function Card() {
     }
   };
 
-  const handlerCart = ()=>{
-    router.navigate('cart')
-  }
+  const handlerDetails = async (item) => {
+    try {
+      
+      await AsyncStorage.setItem("selectedProduct", JSON.stringify(item));
+      
+      
+      router.push("(details)");
+    } catch (error) {
+      console.log("Erro ao salvar no AsyncStorage", error);
+    }
+  };
 
   const toggleLike = (id) => {
     if (likedItems.includes(id)) {
@@ -97,7 +106,7 @@ export default function Card() {
                     )}
                   </TouchableOpacity>
                 </View>
-                <View className="flex w-full  bg-blue-600 items-center  m-1">
+                <View className="flex w-full  bg-blue-600 items-center rounded-xl m-1">
                   <TouchableOpacity 
                   activeOpacity={0.6}
                   style={{
@@ -107,7 +116,7 @@ export default function Card() {
                     borderRadius:12,
                     padding:12
                   }}
-                  onPress={()=> handlerCart()}
+                  onPress={()=> handlerDetails(item)}
                   >
                     <Text className="font-bold text-white text-2xl ">Comprar</Text>
                   </TouchableOpacity>

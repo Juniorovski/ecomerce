@@ -6,6 +6,7 @@ import { router } from "expo-router";
 
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -54,7 +55,7 @@ export default function Register() {
   };
 
   return (
-    <View
+    <SafeAreaView
       className="flex-1 bg-orange-500 "
       style={{ marginTop: statusBarHeight - 30 }}
     >
@@ -122,6 +123,6 @@ export default function Register() {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

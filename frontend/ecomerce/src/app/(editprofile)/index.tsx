@@ -6,6 +6,7 @@ import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -69,15 +70,14 @@ const EditProfile = () => {
         if (res.status === 200) {
           showMessage({
             message: "Sucesso!",
-            description: "Usuario atualizado com sucesso!",
             type: "success",
+            description: "Usuario atualizado com sucesso!",
             icon: "success",
           });
-          
+
+          router.navigate("profile");
         }
        
-
-        router.navigate("profile");
 
       } catch (error) {
         console.log(error);
@@ -93,7 +93,7 @@ const EditProfile = () => {
   };
 
   return (
-    <View
+    <SafeAreaView
       className="flex-1  items-center"
       style={{ marginTop: statusBarHeight - 30 }}
     >
@@ -160,7 +160,7 @@ const EditProfile = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

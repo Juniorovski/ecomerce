@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import api from "@/api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "@/src/hooks/AuthContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 //lembrar de instalar o FlashMessage
 
@@ -53,7 +54,7 @@ export default function Login() {
   };
 
   return (
-    <View
+    <SafeAreaView
       className="flex-1 bg-orange-500 "
       style={{ marginTop: statusBarHeight - 30 }}
     >
@@ -102,6 +103,6 @@ export default function Login() {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -13,6 +13,7 @@ const statusBarHeight = Constants.statusBarHeight;
 export default function Profile() {
   const [userData, setUserData] = useState(null);
   const { signOut } = useContext(AuthContext);
+  const  { editProfile} = useContext(AuthContext);
   const [isLoged, setIsLoged] = useState(false);
 
 
@@ -21,7 +22,6 @@ export default function Profile() {
   }, []);
 
 
-   
   const fetchUserData = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
@@ -65,18 +65,16 @@ export default function Profile() {
     }
   };
   return (
+
     <SafeAreaView
       className="flex-1  items-center"
       style={{ marginTop: statusBarHeight - 30 }}
-
     >
-
      {isLoged ? (
       <>
        {userData && (
 
         < View className="w-full h-64 flex flex-row items-center gap-2 mt-8 mb-2 px-4 ">
-         
            <Image
             className="w-32 h-32 rounded-full mt-4 px-4 mb-2 mx-2 "
             source={{
@@ -115,9 +113,8 @@ export default function Profile() {
 
       </View>
       </>
-     )}
-
-     
+     )} 
+      
       
       <View className="w-full h-full flex flex-col gap-2 mt-4 mb-2 px-4 ">
         <Section
