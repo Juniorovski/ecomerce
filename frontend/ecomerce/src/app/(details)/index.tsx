@@ -9,7 +9,8 @@ import Constants from "expo-constants";
 const statusBarHeight = Constants.statusBarHeight;
 
 const Details = () => {
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState([]);
+  
 
   useEffect(() => {
     // Recupera os dados do produto armazenado no AsyncStorage
@@ -29,10 +30,11 @@ const Details = () => {
 
 
   const handlerCart = async (props) => {
+       
+       
     try {
       
       await AsyncStorage.setItem("selectedProduct", JSON.stringify(product));
-      
       
       router.push("cart");
     } catch (error) {

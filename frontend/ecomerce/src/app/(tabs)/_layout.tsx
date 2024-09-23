@@ -5,10 +5,11 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 export default function Layout() {
   return (
    <Tabs screenOptions={ 
-    {tabBarActiveTintColor:"blue",
+    {tabBarActiveTintColor:"#107dfaea",
     tabBarLabelStyle:{
       fontSize:16,
-      fontWeight:"bold"
+      fontWeight:"semibold",
+      
     }
    }}>
     <Tabs.Screen
@@ -34,7 +35,9 @@ export default function Layout() {
       title:"Pedidos",
       tabBarIcon:({color})=><Ionicons size={28} name="cart-outline" color={color}/>,
       headerShown:false
+
     }}
+   
     />
     <Tabs.Screen
      name="profile"

@@ -1,16 +1,22 @@
+import { AuthContext } from "@/src/hooks/AuthContext";
 import { router } from "expo-router";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 const LoadingScreen = () => {
-
+  const {isSigned} = useContext(AuthContext)
+  console.log('logado: ', isSigned)
     useEffect(()=>{
         animationIndicator(); 
     },[])
 
     const animationIndicator =()=>{
       const timer = setTimeout(()=>{
+        { !isSigned ?
         router.push('(tabs)')
+        :
+        router.push('(pages)')
+        }
      },2000);
      return ()=>clearTimeout(timer);
      }
