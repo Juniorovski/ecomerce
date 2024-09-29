@@ -2,7 +2,7 @@ const Produto = require("../models/Produto");
 const Categoria = require("../models/Categoria");
 
 module.exports = class ProdutoController {
-  
+
   //cadastra produto 
   static async registerProduto(req, res) {
     const { name, descricao, preco, quantidade, categoriaNome } = req.body;
@@ -55,7 +55,7 @@ module.exports = class ProdutoController {
   }
   
  //lista todos os produtos
-  static async listProdutos(req, res) {
+  static async listarProdutos(req, res) {
     try {
       const produto = await Produto.find({}).populate("categoria");
 
@@ -71,8 +71,6 @@ module.exports = class ProdutoController {
   //deleta todos os produtos
   static async deleteProduto(req, res) {
     const { id } = req.params;
-   
-
 
     try {
       const produto = await Produto.findByIdAndDelete(id);

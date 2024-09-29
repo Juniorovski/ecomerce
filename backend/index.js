@@ -17,6 +17,9 @@ app.use('/produto', produtoRouter);
 const categoriaRouter = require('./routers/categoriaRouter');
 app.use('/categoria',categoriaRouter);
 
+const pedidosRouter= require('./routers/pedidosRouter');
+app.use('/pedido',pedidosRouter)
+
 app.get('/',(req,res)=>{
     res.send('Hello, world!')})
     

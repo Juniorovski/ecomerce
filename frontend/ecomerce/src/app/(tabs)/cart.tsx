@@ -10,7 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Cart() {
-  
+  const [amount, setAmount] = useState(Number);
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -40,7 +40,8 @@ const subtrairQuantidade = ()=>{
 }
  
 const somarQuantidade = ()=>{
- 
+   montante += 1;
+  total = montante * product.preco
 }
 
   return (
@@ -120,7 +121,7 @@ const somarQuantidade = ()=>{
           </View>
           <View className="justify-between items-center  m-2 flex-row">
             <Text className="text-stone-600 text-2xl font-semibold">Total</Text>
-            <Text className="text-stone-950 text-3xl font-bold">${product.preco}</Text>
+            <Text className="text-stone-950 text-3xl font-bold">${total}</Text>
           </View>
           <View className="flex items-center justify-center mt-4 m-4 p-4 bg-blue-500 rounded-xl">
             <TouchableOpacity>
@@ -133,8 +134,6 @@ const somarQuantidade = ()=>{
       </View>
 }
       
-      
-     
     </SafeAreaView>
   );
 }

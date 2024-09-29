@@ -9,6 +9,7 @@ interface AuthContextProps{
   signIn:(token:string) => Promise<void>,
   signOut:()=>Promise<void>,
   editProfile:(token:string)=> Promise<void>,
+  favorite:()=>Promise<void>
 }
 
 const defaultValue: AuthContextProps = {
@@ -16,6 +17,7 @@ const defaultValue: AuthContextProps = {
   signIn: async () => {},
   signOut: async () => {},
   editProfile:async()=>{},
+  favorite:async()=>{},
 }
 
 export const AuthContext= createContext<AuthContextProps>(defaultValue);
@@ -99,9 +101,13 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     }
   }
 
+  const favorite = async () =>{
+          
+  }
+
   return (
       <AuthContext.Provider 
-      value={{isSigned,signIn,signOut, editProfile}}
+      value={{isSigned,signIn,signOut, editProfile,favorite}}
       >
         {children}
       </AuthContext.Provider>

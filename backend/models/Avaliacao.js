@@ -8,6 +8,10 @@ const Avaliacao = mongoose.model(
         name:{
             type:string,
             required:true
+        },
+        rate:{
+            type:Number,
+
         }
     })
 )

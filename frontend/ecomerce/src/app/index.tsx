@@ -12,8 +12,7 @@ export const MainPage = () => {
       {isSigned ? (
          
         <Stack.Screen name="(animations)" />
-        
-        
+         
       ) : (
         <Stack.Screen name="(pages)" options={{ headerShown: false }} />
       )}
