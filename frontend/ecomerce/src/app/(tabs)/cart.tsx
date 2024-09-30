@@ -1,17 +1,20 @@
 import { Text, View, Image, TouchableOpacity } from "react-native";
-
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-//import { StatusBar } from "expo-status-bar";
-import Section from "@/src/components/section";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const statusBarHeight = Constants.statusBarHeight;
 
+type Total = {
+  amount: number;
+  total: number;
+};
+
 export default function Cart() {
-  const [amount, setAmount] = useState(Number);
-  const [product, setProduct] = useState([]);
+  const [totals, setTotals] = useState<{ [key: string]: Total }>({});
+  const [products, setProducts] = useState<any[]>([]);  // Inicializa como array vazio
+  const frete = 1.50;
 
   useEffect(() => {
     // Recupera os dados do produto armazenado no AsyncStorage
@@ -19,121 +22,157 @@ export default function Cart() {
       try {
         const storedProduct = await AsyncStorage.getItem("selectedProduct");
         if (storedProduct) {
-          setProduct(JSON.parse(storedProduct)); 
+          const parsedProducts = JSON.parse(storedProduct);
+
+          // Garante que o produto seja sempre um array, mesmo que o AsyncStorage retorne algo inválido
+          if (Array.isArray(parsedProducts)) {
+            setProducts(parsedProducts);
+            calcularTotais(parsedProducts); // Inicializa os totais para cada produto
+          } else {
+            setProducts([]); // Caso não seja array, inicializa como vazio
+          }
+        } else {
+          setProducts([]); // Se não houver dados no AsyncStorage
         }
       } catch (error) {
         console.log("Erro ao buscar dados do AsyncStorage", error);
+        setProducts([]); // Em caso de erro, inicializa como array vazio
       }
     };
- 
     getProductData();
   }, []);
 
-  let frete = 3.50;
-  let montante = 1;
-  
- let total =  product.preco + frete;
- 
+  // Função para salvar um produto no AsyncStorage
+  const adicionarProdutoAoCarrinho = async (novoProduto: any) => {
+    try {
+      const storedProduct = await AsyncStorage.getItem("selectedProduct");
+      let produtosExistentes = storedProduct ? JSON.parse(storedProduct) : [];
 
-const subtrairQuantidade = ()=>{
+      // Verifica se o AsyncStorage já contém produtos, caso sim, adiciona o novo produto
+      if (Array.isArray(produtosExistentes)) {
+        produtosExistentes.push(novoProduto);  // Adiciona o novo produto ao array existente
+      } else {
+        produtosExistentes = [novoProduto]; // Se não for array, inicializa com o novo produto
+      }
 
-}
- 
-const somarQuantidade = ()=>{
-   montante += 1;
-  total = montante * product.preco
-}
+      // Salva o novo array atualizado no AsyncStorage
+      await AsyncStorage.setItem("selectedProduct", JSON.stringify(produtosExistentes));
+      setProducts(produtosExistentes);  // Atualiza o estado dos produtos
+      calcularTotais(produtosExistentes); // Atualiza os totais
+    } catch (error) {
+      console.log("Erro ao adicionar produto ao AsyncStorage", error);
+    }
+  };
+
+  // Função para inicializar os totais
+  const calcularTotais = (products: any[]) => {
+    const initialTotals = {};
+    products.forEach((product) => {
+      initialTotals[product.id] = {
+        amount: 1, // Quantidade inicial de cada produto
+        total: product.preco + frete, // Preço inicial com frete
+      };
+    });
+    setTotals(initialTotals);
+  };
+
+  // Função para adicionar quantidade a um produto
+  const somarQuantidade = (productId: string) => {
+    setTotals((prevTotals) => {
+      const updatedTotals = { ...prevTotals };
+      updatedTotals[productId].amount += 1;
+      updatedTotals[productId].total =
+        updatedTotals[productId].amount * products.find((p) => p.id === productId).preco + frete;
+      return updatedTotals;
+    });
+  };
+
+  // Função para subtrair quantidade de um produto
+  const subtrairQuantidade = (productId: string) => {
+    setTotals((prevTotals) => {
+      const updatedTotals = { ...prevTotals };
+      if (updatedTotals[productId].amount > 1) {
+        updatedTotals[productId].amount -= 1;
+        updatedTotals[productId].total =
+          updatedTotals[productId].amount * products.find((p) => p.id === productId).preco + frete;
+      }
+      return updatedTotals;
+    });
+  };
+
+  // Função para calcular o total geral do carrinho
+  const calcularTotalGeral = () => {
+    return Object.values(totals).reduce((acc, curr) => acc + curr.total, 0).toFixed(2);
+  };
 
   return (
     <SafeAreaView
-      className="flex-1 w-full  items-center justify-center "
+      className="flex-1 w-full items-center justify-center"
       style={{ marginTop: statusBarHeight - 30 }}
-      
     >
-      { product &&
-         
-     
-      <View className="flex w-full mb-8 m-2 justify-between">
-        <Text className="text-stone-950 text-4xl font-bold p-2 m-2">
-          Pedidos
-        </Text>
+      <Text className="text-stone-950 text-4xl font-bold p-2 m-2">Pedidos</Text>
 
-        <View className="flex-row w-full mb-2 p-1 items-center ">
-          <Image
-             source={{ uri: `http://10.0.0.248:5001/files/${product.image}` }}
-             resizeMode="contain"
-            className="w-36 h-36  md:h-60 rounded-2xl m-2 "
-          />
+      {products.length === 0 ? (
+        <Text className="text-stone-950 text-2xl">Carrinho vazio</Text>
+      ) : (
+        products.map((item) => (
+          <View key={item._id} className="flex w-full mb-8 m-2 justify-between">
+            <View className="flex-row w-full mb-2 p-1 items-center">
+              <Image
+                source={{ uri: `http://10.0.0.248:5001/files/${item.image}` }}
+                resizeMode="contain"
+                className="w-36 h-36 rounded-2xl m-2"
+              />
 
-          <View className="flex-col items-start justify-between ">
-            <Text className="text-stone-950 text-2xl font-bold ">
-              {product.name}
-            </Text>
-            <View className="flex-row mt-4 items-center justify-between">
-              <Text className="text-stone-950 text-3xl font-bold ">
-               ${product.preco}
-              </Text>
+              <View className="flex-col items-start justify-between">
+                <Text className="text-stone-950 text-2xl font-bold">{item.name}</Text>
+                <View className="flex-row mt-4 items-center justify-between">
+                  <Text className="text-stone-950 text-3xl font-bold">${item.preco.toFixed(2)}</Text>
 
-              <View className="flex-row m-1 items-center">
-                <TouchableOpacity onPress={subtrairQuantidade}>
-                  <View className="bg-blue-500 rounded-xl w-10 items-center ml-12">
-                    <Text className="text-white text-4xl font-bold ">-</Text>
+                  <View className="flex-row m-1 items-center">
+                    <TouchableOpacity onPress={() => subtrairQuantidade(item.id)}>
+                      <View className="bg-blue-500 rounded-xl w-10 items-center ml-12">
+                        <Text className="text-white text-4xl font-bold">-</Text>
+                      </View>
+                    </TouchableOpacity>
+
+                    <Text className="text-stone-950 text-3xl font-bold p-2">
+                      {totals[item.id]?.amount || 1}
+                    </Text>
+
+                    <TouchableOpacity onPress={() => somarQuantidade(item.id)}>
+                      <View className="bg-blue-500 rounded-xl w-10 items-center">
+                        <Text className="text-white text-4xl font-bold">+</Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                </View>
+              </View>
+            </View>
 
-                <Text className="text-stone-950 text-3xl font-bold p-2">
-                  {montante}
+            <View className="w-full h-full flex flex-col gap-2 mt-4 mb-2 px-4">
+              <Text className="text-stone-950 text-3xl font-bold">Preço Total</Text>
+
+              <View className="justify-between items-center m-2 flex-row">
+                <Text className="text-stone-600 text-2xl font-semibold">Total do Produto</Text>
+                <Text className="text-stone-950 text-3xl font-bold">
+                  ${totals[item.id]?.total.toFixed(2) || (item.preco + frete).toFixed(2)}
                 </Text>
-
-                <TouchableOpacity onPress={somarQuantidade}>
-                  <View className="bg-blue-500 rounded-xl w-10 items-center">
-                    <Text className="text-white text-4xl font-bold ">+</Text>
-                  </View>
-                </TouchableOpacity>
               </View>
             </View>
           </View>
+        ))
+      )}
+
+      {products.length > 0 && (
+        <View className="flex items-center justify-center mt-2 m-4 p-4 bg-blue-500 rounded-xl">
+          <TouchableOpacity>
+            <Text className="text-2xl font-semibold text-white">
+              Fazer Pedido - Total: ${calcularTotalGeral()}
+            </Text>
+          </TouchableOpacity>
         </View>
-
-        <View className="w-full h-full flex flex-col gap-2 mt-4 mb-2 px-4 ">
-          <Text className="text-stone-950 text-3xl font-bold">
-            Metodos de Pagamento
-          </Text>
-    
-          <Section
-          icon={{ name: "credit-card", size: 24 }}
-          name="****01234"
-          size="text-2xl"
-          action={() => ('')}
-          seta=">"
-          />
-          
-
-          <Text className="text-stone-950 text-3xl font-bold">Preço Total</Text>
-
-          <View className="justify-between items-center m-2 flex-row mt-2">
-            <Text className="text-stone-600 text-2xl font-semibold">Subtotal</Text>
-            <Text className="text-stone-950 text-3xl font-bold">${product.preco}</Text>
-          </View>
-          <View className="justify-between items-center flex-row m-2 ">
-            <Text className="text-stone-600  text-2xl font-semibold">Entrega</Text>
-            <Text className="text-stone-950 text-3xl font-bold">${frete}</Text>
-          </View>
-          <View className="justify-between items-center  m-2 flex-row">
-            <Text className="text-stone-600 text-2xl font-semibold">Total</Text>
-            <Text className="text-stone-950 text-3xl font-bold">${total}</Text>
-          </View>
-          <View className="flex items-center justify-center mt-4 m-4 p-4 bg-blue-500 rounded-xl">
-            <TouchableOpacity>
-              <Text className="text-2xl font-semibold text-white">
-                Fazer Pedido {product.preco}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-}
-      
+      )}
     </SafeAreaView>
   );
 }

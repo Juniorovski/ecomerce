@@ -5,12 +5,14 @@ import { Banner } from "../../components/banner";
 import { Search } from "../../components/search";
 import Sections from "../../components/sections";
 import Card from "../../components/card";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const statusBarHeight = Constants.statusBarHeight;
 
 export default function Index() {
   return (
+    
     <ScrollView
       style={{ flex: 1 }}
       className=" bg-white"
@@ -45,5 +47,7 @@ export default function Index() {
       </View>
 
     </ScrollView>
+
+    
   );
 }

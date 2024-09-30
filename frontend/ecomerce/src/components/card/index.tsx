@@ -5,7 +5,6 @@ import {
   Pressable,
   FlatList,
   TouchableOpacity,
-  
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import api from "@/api/api";
@@ -18,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Card() {
   const [produtoData, setProdutoData] = useState([]);
   const [likedItems, setLikedItems] = useState([]);
- const router = useRouter();
+  const router = useRouter();
   useEffect(() => {
     fetchData();
   }, []);
@@ -33,12 +32,38 @@ export default function Card() {
     }
   };
 
+  const handlerCart = async (item) => {
+    try {
+      const storedProduct = await AsyncStorage.getItem("selectedProduct");
+      let carrinhoAtual = storedProduct ? JSON.parse(storedProduct) : [];
+  
+      if (!Array.isArray(carrinhoAtual)) {
+        carrinhoAtual = [];
+      }
+  
+      // Verificar se o produto já está no carrinho
+      const produtoExistente = carrinhoAtual.find(
+        (produto) => produto.id === item.id
+      );
+  
+      if (!produtoExistente) {
+        carrinhoAtual.push(item);
+      } else {
+        console.log("Produto já está no carrinho.");
+      }
+  
+      await AsyncStorage.setItem("selectedProduct", JSON.stringify(carrinhoAtual));
+      router.push("cart");
+    } catch (error) {
+      console.log("Erro ao salvar no AsyncStorage", error);
+    }
+  };
+  
+
   const handlerDetails = async (item) => {
     try {
-      
       await AsyncStorage.setItem("selectedProduct", JSON.stringify(item));
-      
-      
+
       router.push("(details)");
     } catch (error) {
       console.log("Erro ao salvar no AsyncStorage", error);
@@ -83,7 +108,7 @@ export default function Card() {
         renderItem={({ item }) => {
           return (
             <View className="w-52 flex h-100 mt-1 mb-1  items-center m-1 gap-2 flex-col box-border rounded-2xl">
-              <Pressable className="w-full h-60 rounded-t-2xl ">
+              <Pressable className="w-full h-60 rounded-t-2xl relative ">
                 <Image
                   className="w-full h-60 rounded-t-2xl "
                   source={{ uri: `http://10.0.0.248:5001/files/${item.image}` }}
@@ -91,9 +116,7 @@ export default function Card() {
                 />
               </Pressable>
               <View className="w-full flex flex-col  justify-center items-center ">
-                <Text className="text-2xl ">
-                  {item.name.slice(0, 15)}
-                </Text>
+                <Text className="text-2xl ">{item.name.slice(0, 15)}</Text>
 
                 <View className="flex w-full flex-row justify-evenly gap-2 items-center px-1">
                   <Text className="text-3xl font-serif">R${item.preco}</Text>
@@ -106,22 +129,31 @@ export default function Card() {
                     )}
                   </TouchableOpacity>
                 </View>
-                <View className="flex w-full  bg-blue-600 items-center rounded-xl m-1">
-                  <TouchableOpacity 
-                  activeOpacity={0.6}
-                  style={{
-                    backgroundColor:'#2563eb',
-                    width:'100%',
-                    alignItems:"center",
-                    borderRadius:12,
-                    padding:12
-                  }}
-                  onPress={()=> handlerDetails(item)}
+                <View className="flex w-full flex-row gap-2 justify-center items-center rounded-xl m-1">
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    style={{
+                      backgroundColor: "#2563eb",
+                      width: "60%",
+                      alignItems: "center",
+                      borderRadius: 12,
+                      padding: 10,
+                    }}
+                    onPress={() => handlerDetails(item)}
                   >
-                    <Text className="font-bold text-white text-2xl ">Comprar</Text>
+                    <Text className="font-bold text-white text-2xl ">
+                      {" "}
+                      Comprar{" "}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    className="absolute flex  "
+                    onPress={() => handlerCart(item)}
+                  >
+                    <Feather name="shopping-cart" size={24} color={"#000"} />
                   </TouchableOpacity>
                 </View>
-
               </View>
             </View>
           );

@@ -14,7 +14,7 @@ export const MainPage = () => {
         <Stack.Screen name="(animations)" />
          
       ) : (
-        <Stack.Screen name="(pages)" options={{ headerShown: false }} />
+        <Stack.Screen name="(pages)" options={{ headerShown:false}} />
       )}
     </Stack>
   );
