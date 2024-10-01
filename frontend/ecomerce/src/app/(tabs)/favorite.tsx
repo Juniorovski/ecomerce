@@ -3,12 +3,9 @@ import React, { useEffect } from "react";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
-  Feather,
-  FontAwesome,
-  FontAwesome5,
-  Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const statusBarHeight = Constants.statusBarHeight;
 export default function Favorite() {
@@ -18,7 +15,9 @@ export default function Favorite() {
 
   const getFavorite = () => {};
 
-
+ const goBuy = ()=>{
+   router.push('(tabs)')
+ }
 
   return (
     <SafeAreaView
@@ -42,10 +41,10 @@ export default function Favorite() {
         </Text>
 
         <View className="flex w-full items-center p-2 m-2 bg-sky-800 rounded-3xl mt-4">
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>goBuy()}>
             <Text className="text-2xl font-semibold text-white p-2 ">
               {" "}
-              Vai Comprar{" "}
+              Vai Comprar
             </Text>
           </TouchableOpacity>
         </View>

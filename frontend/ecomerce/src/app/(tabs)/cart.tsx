@@ -3,6 +3,8 @@ import Constants from "expo-constants";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -41,6 +43,10 @@ export default function Cart() {
     };
     getProductData();
   }, []);
+
+  const goBuy=()=>{
+    router.push('(tabs)')
+  }
 
   // Função para salvar um produto no AsyncStorage
   const adicionarProdutoAoCarrinho = async (novoProduto: any) => {
@@ -113,7 +119,31 @@ export default function Cart() {
       <Text className="text-stone-950 text-4xl font-bold p-2 m-2">Pedidos</Text>
 
       {products.length === 0 ? (
-        <Text className="text-stone-950 text-2xl">Carrinho vazio</Text>
+       <View className="flex justify-center items-center m-4 p-2  mt-32 ">
+       <View className="bg-slate-200 w-36 h-36 rounded-full items-center justify-center mt-4 mb-4">
+         <MaterialIcons
+           name="remove-shopping-cart"
+           size={50}
+           color={"#4e4949"}
+         />
+       </View>
+       <Text className="text-2xl font-bold">
+        Ops! Seu carrinho está vazio!
+       </Text>
+       <Text className="text-xl font-thin m-2 text-center">
+         Adicione items ao carrinho, aproveite nossas ofertas e variedades de produtos.
+       </Text>
+
+       <View className="flex w-full items-center p-2 m-2 bg-sky-800 rounded-3xl mt-4">
+         <TouchableOpacity onPress={()=>goBuy()}>
+           <Text className="text-2xl font-semibold text-white p-2 ">
+             {" "}
+             Vai Comprar
+           </Text>
+         </TouchableOpacity>
+       </View>
+     </View>
+       
       ) : (
         products.map((item) => (
           <View key={item._id} className="flex w-full mb-8 m-2 justify-between">
