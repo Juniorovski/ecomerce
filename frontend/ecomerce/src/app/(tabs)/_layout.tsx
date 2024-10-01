@@ -9,7 +9,6 @@ export default function Layout() {
     tabBarLabelStyle:{
       fontSize:16,
       fontWeight:"semibold",
-      
     }
    }}>
     <Tabs.Screen

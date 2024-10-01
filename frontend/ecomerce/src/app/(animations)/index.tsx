@@ -6,16 +6,18 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 const LoadingScreen = () => {
   const {isSigned} = useContext(AuthContext)
   console.log('logado: ', isSigned)
+
     useEffect(()=>{
         animationIndicator(); 
     },[])
 
     const animationIndicator =()=>{
       const timer = setTimeout(()=>{
-        { !isSigned ?
-        router.push('(tabs)')
-        :
-        router.push('(pages)')
+        {isSigned ?
+          router.push('(pages)')
+          :
+         router.push('(tabs)')
+        
         }
      },2000);
      return ()=>clearTimeout(timer);

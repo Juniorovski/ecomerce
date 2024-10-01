@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext} from "../hooks/AuthContext";
+import { AuthContext, AuthProvider} from "../hooks/AuthContext";
 import { Stack } from "expo-router";
 
 export const MainPage = () => {
@@ -7,7 +7,7 @@ export const MainPage = () => {
   console.log(`Logado : ${isSigned}`);
 
   return (
-
+    
     <Stack screenOptions={{ headerShown: false }}>
       {isSigned ? (
          
@@ -17,5 +17,6 @@ export const MainPage = () => {
         <Stack.Screen name="(pages)" options={{ headerShown:false}} />
       )}
     </Stack>
+    
   );
 };
