@@ -33,7 +33,7 @@ export default function Favorite() {
           />
         </View>
         <Text className="text-2xl font-bold">
-          Sua Lista de Favoritos está vazia!
+         Ops! Sua Lista de Favoritos está vazia!
         </Text>
         <Text className="text-xl font-thin m-2 text-center">
           Adicione seus items favoritos e tenha uma lista de compras
